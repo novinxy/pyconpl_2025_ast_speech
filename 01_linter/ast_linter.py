@@ -2,7 +2,11 @@ from pathlib import Path
 import ast
 
 class Visitor(ast.NodeVisitor):
-    def visit(self, node: ast.AST):
+    def visit_FunctionDef(self, node: ast.FunctionDef):
+        for default in node.args.defaults:
+            if isinstance(default, ast.List):
+                print("Do not use List for default arguments")
+
         self.generic_visit(node)
 
 
