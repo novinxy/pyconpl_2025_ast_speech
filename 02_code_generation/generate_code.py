@@ -6,14 +6,21 @@ schema = json.loads(Path('schema.json').read_text())
 
 
 def generate_class_ast(class_name: str, fields: dict):
-    body = [
-        ast.AnnAssign(
-            target=ast.Name(id=name),
-            annotation=ast.Subscript(value=ast.Name(id='Mapped'), slice=ast.Name(id=type_)),
-            simple=1
-        )
-        for name, type_ in fields.items()
-    ]
+    body = []
+    for name, type_ in fields.items():
+        column = ast.AnnAssign(
+                target=ast.Name(id=name),
+                annotation=ast.Subscript(value=ast.Name(id='Mapped'), slice=ast.Name(id=type_)),
+                simple=1
+            )
+        if name == 'id':
+            column.value = ast.Call(
+                func=ast.Name(id='mapped_column'),
+                args=[],
+                keywords=[ast.keyword(arg='Primary_key', value=ast.Constant(value=True)),]
+            )
+
+        body.append(column)
 
     return ast.ClassDef(
         name=class_name,
@@ -22,6 +29,7 @@ def generate_class_ast(class_name: str, fields: dict):
         body=body,
         decorator_list=[]
     )
+
 
 def schema_to_ast(schema):
     return [generate_class_ast(name, fields) for name, fields in schema.items()]
