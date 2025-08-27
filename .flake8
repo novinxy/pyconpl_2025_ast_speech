@@ -1,4 +1,4 @@
 [flake8:local-plugins]
 extension =
     PC25 = plugin:PyConPlugin
-paths = ./linter
+paths = ./01_linter
