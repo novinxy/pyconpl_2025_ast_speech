@@ -6,11 +6,19 @@ schema = json.loads(Path('schema.json').read_text())
 
 
 def generate_class_ast(class_name: str, fields: dict):
+    body = [
+        ast.AnnAssign(
+            target=ast.Name(id='id'),
+            annotation=ast.Subscript(value=ast.Name(id='Mapped'), slice=ast.Name(id='int')),
+            simple=1
+        )
+    ]
+
     return ast.ClassDef(
         name=class_name,
-        bases=[],
+        bases=[ast.Name(id='Base')],
         keywords=[],
-        body=[],
+        body=body,
         decorator_list=[]
     )
 
