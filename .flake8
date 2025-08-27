@@ -1,3 +1,14 @@
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    .venv,
+    venv,
+    .mypy_cache,
+    .pytest_cache
+
 [flake8:local-plugins]
 extension =
     PC25 = plugin:PyConPlugin
