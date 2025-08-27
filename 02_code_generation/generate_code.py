@@ -8,10 +8,11 @@ schema = json.loads(Path('schema.json').read_text())
 def generate_class_ast(class_name: str, fields: dict):
     body = [
         ast.AnnAssign(
-            target=ast.Name(id='id'),
-            annotation=ast.Subscript(value=ast.Name(id='Mapped'), slice=ast.Name(id='int')),
+            target=ast.Name(id=name),
+            annotation=ast.Subscript(value=ast.Name(id='Mapped'), slice=ast.Name(id=type_)),
             simple=1
         )
+        for name, type_ in fields.items()
     ]
 
     return ast.ClassDef(
