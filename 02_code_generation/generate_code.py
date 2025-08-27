@@ -6,7 +6,13 @@ schema = json.loads(Path('schema.json').read_text())
 
 
 def generate_class_ast(class_name: str, fields: dict):
-    ...
+    return ast.ClassDef(
+        name=class_name,
+        bases=[],
+        keywords=[],
+        body=[],
+        decorator_list=[]
+    )
 
 def schema_to_ast(schema):
     return [generate_class_ast(name, fields) for name, fields in schema.items()]
