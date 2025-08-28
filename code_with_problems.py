@@ -1,6 +1,6 @@
-def append_to(element, to=[]):
-    to.append(element)
-    return to
+def append_to(element, collection=[]):
+    collection.append(element)
+    return collection
 
 
 print(append_to(12))  # [12]
